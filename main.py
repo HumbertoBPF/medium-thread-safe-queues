@@ -59,27 +59,6 @@ def test_concurrent_enqueues(queue: Queue):
     queue.traversal()
 
 
-def enqueue_n_times(queue: Queue, n: int, start_index):
-    """
-    Function that enqueues into the queue n times.
-    :param queue: concerned queue.
-    :param n: number of enqueue operations.
-    :param start_index: starting index.
-    """
-    for i in range(n):
-        queue.enqueue(item=start_index + i)
-
-
-def dequeue_n_times(queue: Queue, n: int):
-    """
-    Function that dequeues into the queue n times.
-    :param queue: concerned queue.
-    :param n: number of dequeue operations.
-    """
-    for i in range(n):
-        queue.dequeue()
-
-
 def test_concurrent_enqueues_and_dequeues(queue: Queue):
     # Should enqueue items from 0 to 9 to the linked list
     thread_1 = threading.Thread(target=enqueue_and_dequeue_n_times, args=(queue, 10, 0))
@@ -110,6 +89,27 @@ def enqueue_and_dequeue_n_times(queue: Queue, n: int, start_index):
         queue.dequeue()
 
 
+def enqueue_n_times(queue: Queue, n: int, start_index):
+    """
+    Function that enqueues into the queue n times.
+    :param queue: concerned queue.
+    :param n: number of enqueue operations.
+    :param start_index: starting index.
+    """
+    for i in range(n):
+        queue.enqueue(item=start_index + i)
+
+
+def dequeue_n_times(queue: Queue, n: int):
+    """
+    Function that dequeues into the queue n times.
+    :param queue: concerned queue.
+    :param n: number of dequeue operations.
+    """
+    for i in range(n):
+        queue.dequeue()
+
+
 def start_and_measure_threads(threads: list[threading.Thread]):
     """
     Triggers all the threads provided in the input list and measures the time until they complete.
@@ -126,10 +126,9 @@ def start_and_measure_threads(threads: list[threading.Thread]):
 
     final_time = datetime.now()
     delta_t_in_seconds = (final_time - initial_time).total_seconds()
-    # print("Total time:", delta_t_in_seconds)
 
     # Return time in milliseconds
-    return delta_t_in_seconds * (10 ** 6)
+    return delta_t_in_seconds
 
 
 def spawn_threads(queue: Queue, n_threads: int) -> float:
@@ -194,4 +193,3 @@ def compare_queues():
 
 if __name__ == "__main__":
     compare_queues()
-    # test_queue(queue=OptimizedConcurrentSafeQueue())
